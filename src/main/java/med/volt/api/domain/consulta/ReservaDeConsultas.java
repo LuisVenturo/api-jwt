@@ -1,11 +1,14 @@
 package med.volt.api.domain.consulta;
 
 import med.volt.api.domain.ValidacionException;
+import med.volt.api.domain.consulta.validaciones.ValidadorDeConsultas;
 import med.volt.api.domain.medico.Medico;
 import med.volt.api.domain.medico.MedicoRepository;
 import med.volt.api.domain.paciente.PacienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class ReservaDeConsultas {
@@ -15,6 +18,8 @@ public class ReservaDeConsultas {
     private PacienteRepository pacienteRepository;
     @Autowired
     private ConsultaRepository consultaRepository;
+    @Autowired
+    private List<ValidadorDeConsultas> validadores;
 
     public void reservar(DatosReservaConsulta datos){
 
@@ -25,6 +30,8 @@ public class ReservaDeConsultas {
             throw new ValidacionException("No existe un medico con el id informado");
         }
 
+        //validaciones
+        validadores.forEach(v -> v.validar(datos));
 
         var medico = elegirMedico(datos);
         var paciente = pacienteRepository.findById(datos.idPaciente()).get();
@@ -38,7 +45,7 @@ public class ReservaDeConsultas {
             return medicoRepository.getReferenceById(datos.idMedico());
         }
         if (datos.especialidad() == null){
-            throw new ValidacionException("Es necesario elegir una especialiad cuando se elige un medico");
+            throw new ValidacionException("Es necesario elegir una especialidad cuando se elige un medico");
         }
 
         return medicoRepository.elegirMedicoAleatorioDisponibleEnLaFecha(datos.especialidad(), datos.fecha());
