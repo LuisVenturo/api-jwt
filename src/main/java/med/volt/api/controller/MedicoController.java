@@ -23,8 +23,8 @@ public class MedicoController {
     @PostMapping
     public ResponseEntity<DatosRespuestaMedico> registrarMedico(@RequestBody @Valid DatosRegistroMedico datosRegistroMedico, UriComponentsBuilder uriBuilder){
         Medico medico = medicoRepository.save(new Medico(datosRegistroMedico));
-        DatosRespuestaMedico datosRespuestaMedico =  new DatosRespuestaMedico(medico.getId(), medico.getNombre(), medico.getDocumento(), medico.getEmail(),
-                medico.getTelefono());
+        DatosRespuestaMedico datosRespuestaMedico =  new DatosRespuestaMedico(medico.getId(), medico.getNombre(),medico.getEmail(),medico.getTelefono(),
+                medico.getDocumento());
         URI url = uriBuilder.path("/medicos/{id}").buildAndExpand(medico.getId()).toUri();
         return ResponseEntity.created(url).body(datosRespuestaMedico);
     }

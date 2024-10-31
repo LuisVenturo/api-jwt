@@ -1,4 +1,4 @@
-package med.volt.api.domain.consulta.validaciones;
+package med.volt.api.domain.consulta.validaciones.reserva;
 
 import med.volt.api.domain.ValidacionException;
 import med.volt.api.domain.consulta.DatosReservaConsulta;
@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-@Component //cuando tenemos un componente generico cuando necesitamos que spring lo cargue de forma generica
+@Component("ValidadorConsultaConAnticipacionReserva") //cuando tenemos un componente generico cuando necesitamos que spring lo cargue de forma generica
 public class ValidadorConsultaConAnticipacion implements ValidadorDeConsultas {
 
     public void validar(DatosReservaConsulta datos){

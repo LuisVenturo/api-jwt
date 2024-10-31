@@ -1,4 +1,4 @@
-package med.volt.api.domain.consulta.validaciones;
+package med.volt.api.domain.consulta.validaciones.reserva;
 
 import med.volt.api.domain.ValidacionException;
 import med.volt.api.domain.consulta.ConsultaRepository;
